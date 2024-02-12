@@ -9,6 +9,7 @@ import (
 	api "grpc-app/api" // Import the generated code
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 type server struct {
@@ -31,6 +32,7 @@ func main() {
 
 	s := grpc.NewServer()
 	api.RegisterGreeterServer(s, &server{})
+	reflection.Register(s)
 
 	fmt.Println("Server listening on :50051")
 	if err := s.Serve(lis); err != nil {
